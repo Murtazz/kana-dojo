@@ -86,22 +86,20 @@ const AchievementCard = ({
   const RarityIcon = config.icon;
 
   return (
-    <motion.div
-      whileHover={{ scale: 1.02, y: -2 }}
-      whileTap={{ scale: 0.98 }}
+    <div
       className={clsx(
-        'relative p-6 cursor-pointer transition-all duration-300',
-        'rounded-2xl border-2 overflow-hidden group',
+        'relative p-6 cursor-pointer',
+        'rounded-2xl border-2 overflow-hidden',
         isUnlocked
-          ? 'bg-[var(--card-color)] border-[var(--border-color)] hover:shadow-xl hover:border-[var(--main-color)]/30'
-          : 'bg-[var(--background-color)] border-[var(--border-color)]/50 opacity-80 hover:opacity-100'
+          ? 'bg-[var(--card-color)] border-[var(--border-color)]'
+          : 'bg-[var(--background-color)] border-[var(--border-color)]/50 opacity-80'
       )}
       onClick={onClick}
     >
       {/* Gradient overlay for unlocked achievements */}
       {isUnlocked && (
         <div
-          className='absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-300'
+          className='absolute inset-0 opacity-5'
           style={{
             background: `linear-gradient(135deg, ${config.color}20, transparent)`
           }}
@@ -140,7 +138,7 @@ const AchievementCard = ({
           <div
             className={clsx(
               'w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-bold',
-              'border-2 transition-all duration-300 group-hover:scale-110'
+              'border-2'
             )}
             style={
               isUnlocked
@@ -162,7 +160,7 @@ const AchievementCard = ({
           <div className='flex-1 min-w-0'>
             <h3
               className={clsx(
-                'font-bold text-lg mb-1 group-hover:text-[var(--main-color)] transition-colors',
+                'font-bold text-lg mb-1',
                 isUnlocked
                   ? 'text-[var(--main-color)]'
                   : 'text-[var(--secondary-color)]'
@@ -195,12 +193,16 @@ const AchievementCard = ({
                 {Math.round(progress)}%
               </span>
             </div>
-            <div className='w-full bg-[var(--border-color)] rounded-full h-2'>
+            <div className='w-full bg-[var(--card-color)] rounded-full h-3'>
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.8, ease: 'easeOut' }}
-                className='h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500'
+                className='h-3 rounded-full'
+                style={{
+                  background:
+                    'linear-gradient(to right, var(--secondary-color), var(--main-color))'
+                }}
               />
             </div>
           </div>
@@ -234,7 +236,7 @@ const AchievementCard = ({
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -408,12 +410,16 @@ const AchievementProgress = () => {
                   {Math.round(completionPercentage)}%
                 </span>
               </div>
-              <div className='w-full bg-[var(--border-color)] rounded-full h-3'>
+              <div className='w-full bg-[var(--card-color)] rounded-full h-4'>
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${completionPercentage}%` }}
                   transition={{ duration: 1.5, ease: 'easeOut' }}
-                  className='h-3 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full'
+                  className='h-4 rounded-full'
+                  style={{
+                    background:
+                      'linear-gradient(to right, var(--secondary-color), var(--main-color))'
+                  }}
                 />
               </div>
             </motion.div>
@@ -438,7 +444,7 @@ const AchievementProgress = () => {
                   transition={{ delay: 0.1 * index }}
                   onClick={() => handleCategorySelect(category.id)}
                   className={clsx(
-                    'flex items-center gap-2 px-4 py-3 rounded-xl transition-all duration-200',
+                    'flex items-center gap-2 px-4 py-3 rounded-xl transition-all duration-200 hover:cursor-pointer',
                     'border-2 font-medium',
                     isSelected
                       ? 'bg-[var(--main-color)] text-[var(--background-color)] border-[var(--main-color)]'
