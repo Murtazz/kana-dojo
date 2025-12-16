@@ -210,10 +210,14 @@ export async function POST(request: NextRequest) {
     const translation = data.data.translations[0];
 
     // Generate romanization when translating TO Japanese
-    const romanization =
-      targetLanguage === 'ja'
-        ? generateRomanization(translation.translatedText)
-        : undefined;
+    let romanization: string | undefined;
+    if (targetLanguage === 'ja') {
+      romanization = await generateRomanization(translation.translatedText);
+      // Only include if we got a non-empty result
+      if (!romanization) {
+        romanization = undefined;
+      }
+    }
 
     return NextResponse.json({
       translatedText: translation.translatedText,
