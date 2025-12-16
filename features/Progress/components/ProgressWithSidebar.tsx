@@ -32,8 +32,8 @@ const ProgressWithSidebar = () => {
   return (
     <SidebarLayout>
       {/* View Toggle Switch */}
-      <div className='flex justify-center'>
-        <div className='inline-flex rounded-2xl bg-[var(--card-color)] border border-[var(--border-color)] p-2 gap-2'>
+      <div className='flex justify-center px-2'>
+        <div className='inline-flex flex-wrap justify-center rounded-2xl bg-[var(--card-color)] border border-[var(--border-color)] p-2 gap-2'>
           {viewOptions.map(option => (
             <button
               key={option.value}
@@ -42,14 +42,14 @@ const ProgressWithSidebar = () => {
                 playClick();
               }}
               className={clsx(
-                'relative px-5 py-2.5 rounded-xl text-sm font-medium transition-all hover:cursor-pointer flex items-center gap-2',
+                'relative px-3 sm:px-5 py-2.5 rounded-xl text-sm font-medium transition-all hover:cursor-pointer flex items-center gap-1.5 sm:gap-2',
                 currentView === option.value
                   ? 'bg-[var(--main-color)] text-[var(--background-color)] border-b-4 border-[var(--main-color-accent)]'
                   : 'text-[var(--secondary-color)] hover:text-[var(--main-color)] border-b-4 border-[var(--card-color)] hover:border-[var(--border-color)]/50 hover:bg-[var(--border-color)]/50'
               )}
             >
               {option.icon}
-              <span>{option.label}</span>
+              <span className='max-sm:hidden'>{option.label}</span>
             </button>
           ))}
         </div>

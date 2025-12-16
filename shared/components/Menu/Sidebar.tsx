@@ -10,7 +10,7 @@ import {
   Leaf,
   Sparkles,
   Star,
-  TrendingUp,
+  Trophy,
   Volume2,
   Wind
 } from 'lucide-react';
@@ -146,7 +146,7 @@ const Sidebar = () => {
         )}
         onClick={playClick}
       >
-        <TrendingUp />
+        <Trophy />
         <span className='max-lg:hidden'>Progress</span>
       </Link>
       <Link
