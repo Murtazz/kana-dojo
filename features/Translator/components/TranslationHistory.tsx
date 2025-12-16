@@ -117,8 +117,8 @@ export default function TranslationHistory({
             <ActionButton
               colorScheme='secondary'
               borderRadius='lg'
-              borderBottomThickness={4}
-              className='!w-auto px-4 !bg-red-500 !border-b-red-700 !text-[var(--background-color)]'
+              borderBottomThickness={6}
+              className='!w-auto px-4'
             >
               <Trash2 className='h-4 w-4' />
               Clear All
@@ -142,9 +142,8 @@ export default function TranslationHistory({
             <AlertDialogFooter className='gap-3 flex-row'>
               <ActionButton
                 colorScheme='main'
-                borderColorScheme='main'
                 borderRadius='lg'
-                borderBottomThickness={4}
+                borderBottomThickness={6}
                 className='!w-auto px-6'
                 onClick={() => setClearDialogOpen(false)}
               >
@@ -153,8 +152,8 @@ export default function TranslationHistory({
               <ActionButton
                 colorScheme='secondary'
                 borderRadius='lg'
-                borderBottomThickness={4}
-                className='!w-auto px-6 !bg-red-500 !border-b-red-700 !text-[var(--background-color)]'
+                borderBottomThickness={6}
+                className='!w-auto px-6'
                 onClick={() => {
                   onClearAll();
                   setClearDialogOpen(false);
@@ -220,11 +219,10 @@ export default function TranslationHistory({
             <ActionButton
               colorScheme='secondary'
               borderRadius='lg'
-              borderBottomThickness={2}
+              borderBottomThickness={6}
               className={cn(
                 '!w-9 !min-w-9 h-9 !p-0 flex-shrink-0',
                 'opacity-0 group-hover:opacity-100',
-                '!bg-red-500 !border-b-red-700 !text-[var(--background-color)]',
                 'transition-opacity duration-200'
               )}
               onClick={e => {

@@ -129,9 +129,9 @@ export default function TranslatorInput({
           <ActionButton
             onClick={handleClear}
             disabled={isDisabled}
-            colorScheme='main'
+            colorScheme='secondary'
             borderRadius='lg'
-            borderBottomThickness={2}
+            borderBottomThickness={6}
             className={cn(
               '!w-9 !min-w-9 h-9 !p-0',
               'disabled:opacity-50 disabled:cursor-not-allowed'
