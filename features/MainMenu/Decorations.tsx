@@ -42,7 +42,6 @@ type CharacterStyle = {
   char: string;
   color: string;
   fontClass: string;
-  animationDelay: string;
 };
 
 type AnimState = 'idle' | 'exploding' | 'hidden' | 'fading-in';
@@ -55,6 +54,14 @@ type AnimState = 'idle' | 'exploding' | 'hidden' | 'fading-in';
 const GRID_CONFIG = {
   desktop: { cols: 28, cellSize: 36, gap: 2 }, // grid-cols-28, text-4xl ~ 36px
   mobile: { cols: 10, cellSize: 36, gap: 2 } // grid-cols-10
+};
+
+// Scatter animation configuration - for random pulsing effect
+const SCATTER_CONFIG = {
+  frequency: 6000, // Trigger new scatter burst every 6 seconds
+  scatterCount: 70, // Number of random characters to animate (~9% of desktop grid)
+  pulseDuration: 5000, // Duration of each pulse animation in ms
+  overlap: true // Allow slight overlap between bursts for continuous movement
 };
 
 // Calculate how many characters to render based on viewport
@@ -189,8 +196,7 @@ const precomputeStyles = async (
     fontClass:
       fonts.length > 0
         ? fonts[Math.floor(Math.random() * fonts.length)].font.className
-        : '',
-    animationDelay: `${Math.floor(Math.random() * 1000)}ms`
+        : ''
   }));
 
   precomputedStylesCache.set(count, styles);
@@ -276,20 +282,25 @@ InteractiveChar.displayName = 'InteractiveChar';
 
 interface StaticCharProps {
   style: CharacterStyle;
+  isAnimating?: boolean;
 }
 
-const StaticChar = memo(({ style }: StaticCharProps) => (
+const StaticChar = memo(({ style, isAnimating = false }: StaticCharProps) => (
   <span
     className={clsx(
-      'inline-flex items-center justify-center text-4xl motion-safe:animate-pulse',
+      'inline-flex items-center justify-center text-4xl',
+      isAnimating && 'motion-safe:animate-pulse',
       style.fontClass
     )}
     aria-hidden='true'
     style={{
       color: style.color,
-      animationDelay: style.animationDelay,
       contentVisibility: 'auto',
-      containIntrinsicSize: '36px'
+      containIntrinsicSize: '36px',
+      // Custom animation duration for slower, organic breathing effect
+      ...(isAnimating && {
+        animationDuration: `${SCATTER_CONFIG.pulseDuration}ms`
+      })
     }}
   >
     {style.char}
@@ -314,6 +325,9 @@ const Decorations = ({
   const [styles, setStyles] = useState<CharacterStyle[]>([]);
   const [visibleCount, setVisibleCount] = useState<number>(() =>
     calculateVisibleCount(interactive)
+  );
+  const [animatingIndices, setAnimatingIndices] = useState<Set<number>>(
+    new Set()
   );
   const { playClick } = useClick();
 
@@ -386,6 +400,42 @@ const Decorations = ({
     };
   }, [interactive]);
 
+  // Random scatter burst animation - only in static (non-interactive) mode
+  useEffect(() => {
+    // Only run scatter animation in static mode
+    if (interactive || styles.length === 0) return;
+
+    // Helper function to select random unique indices
+    const selectRandomIndices = (count: number, max: number): Set<number> => {
+      const indices = new Set<number>();
+      while (indices.size < Math.min(count, max)) {
+        indices.add(Math.floor(Math.random() * max));
+      }
+      return indices;
+    };
+
+    // Trigger initial scatter immediately
+    const initialIndices = selectRandomIndices(
+      SCATTER_CONFIG.scatterCount,
+      styles.length
+    );
+    setAnimatingIndices(initialIndices);
+
+    // Set up interval for subsequent scatter bursts
+    const scatterInterval = setInterval(() => {
+      const newIndices = selectRandomIndices(
+        SCATTER_CONFIG.scatterCount,
+        styles.length
+      );
+      setAnimatingIndices(newIndices);
+    }, SCATTER_CONFIG.frequency);
+
+    return () => {
+      clearInterval(scatterInterval);
+      setAnimatingIndices(new Set());
+    };
+  }, [interactive, styles.length]);
+
   // Memoize grid content - now using separate components for interactive vs static
   const gridContent = useMemo(() => {
     if (styles.length === 0) return null;
@@ -397,12 +447,16 @@ const Decorations = ({
         <InteractiveChar key={index} style={style} onExplode={handleExplode} />
       ));
     } else {
-      // Static mode: simple spans with no state
+      // Static mode: random scatter animation - only selected chars animate
       return styles.map((style, index) => (
-        <StaticChar key={index} style={style} />
+        <StaticChar
+          key={index}
+          style={style}
+          isAnimating={animatingIndices.has(index)}
+        />
       ));
     }
-  }, [styles, interactive, handleExplode]);
+  }, [styles, interactive, handleExplode, animatingIndices]);
 
   if (styles.length === 0) return null;
 
