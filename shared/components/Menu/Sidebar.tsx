@@ -73,6 +73,7 @@ const secondaryNavSections: NavSection[] = [
     title: 'Experiments',
     items: [
       { href: '/experiments', label: 'All Experiments', icon: Sparkles },
+      { href: '/calligraphy', label: ' Calligraphy', charIcon: '書' },
       { href: '/zen', label: 'Zen Mode', icon: Leaf },
       { href: '/experiments/breathing', label: 'Breathing', icon: Wind },
       { href: '/experiments/ambient', label: 'Ambient', icon: Sparkles },
@@ -85,8 +86,7 @@ const secondaryNavSections: NavSection[] = [
         icon: Star
       },
       { href: '/experiments/typing', label: 'Speed Typing', icon: Keyboard },
-      { href: '/experiments/memory', label: 'Memory Palace', icon: Brain },
-      { href: '/calligraphy', label: ' Calligraphy', charIcon: '書' }
+      { href: '/experiments/memory', label: 'Memory Palace', icon: Brain }
     ]
   }
 ];
