@@ -243,18 +243,6 @@ const baseThemeSets: BaseThemeGroup[] = [
     icon: Moon,
     themes: [
       {
-        id: 'sakura-storm',
-        backgroundColor: 'oklch(90.0% 0.032 340.0 / 1)',
-        mainColor: 'oklch(70.0% 0.185 345.0 / 1)',
-        secondaryColor: 'oklch(55.0% 0.145 350.0 / 1)',
-      },
-      {
-        id: 'festival-mask',
-        backgroundColor: 'oklch(20.0% 0.042 15.0 / 1)',
-        mainColor: 'oklch(80.0% 0.175 55.0 / 1)',
-        secondaryColor: 'oklch(72.0% 0.195 20.0 / 1)'
-      },
-      {
         id: 'samurai-steel',
         backgroundColor: 'oklch(18.0% 0.022 250.0 / 1)',
         mainColor: 'oklch(80.0% 0.055 240.0 / 1)',
@@ -340,12 +328,6 @@ const baseThemeSets: BaseThemeGroup[] = [
         backgroundColor: 'oklch(15.0% 0.065 300.0 / 1)',
         mainColor: 'oklch(80.0% 0.210 180.0 / 1)',
         secondaryColor: 'oklch(85.0% 0.190 320.0 / 1)',
-      },
-      {
-        id: 'sashimi-fresh',
-        backgroundColor: 'oklch(17.0% 0.028 280.0 / 1)',
-        mainColor: 'oklch(75.0% 0.145 5.0 / 1)',
-        secondaryColor: 'oklch(85.0% 0.095 350.0 / 1)',
       },
 
       {
@@ -1082,12 +1064,15 @@ const baseThemeSets: BaseThemeGroup[] = [
         secondaryColor: 'oklch(75.0% 0.075 90.0 / 1)',
       },
       {
+<<<<<<< HEAD
         id: 'bento-box',
         backgroundColor: 'oklch(22.0% 0.025 45.0 / 1)',
         mainColor: 'oklch(70.0% 0.175 20.0 / 1)',
         secondaryColor: 'oklch(75.0% 0.165 145.0 / 1)',
       },
       {
+=======
+>>>>>>> 18877926 (removed redundant color themes)
         id: 'hanabi-festival',
         backgroundColor: 'oklch(14.0% 0.055 275.0 / 1)',
         mainColor: 'oklch(85.0% 0.200 35.0 / 1)',
