@@ -5,6 +5,8 @@ import clsx from 'clsx';
 import { Trophy } from 'lucide-react';
 import type { CSSProperties } from 'react';
 
+const USE_HALO_STAT_CARD_DESIGN = false;
+
 interface StatCardProps {
   value: number;
   label: string;
@@ -21,26 +23,41 @@ const StatCard = ({ value, label, index, haloGap }: StatCardProps) => (
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay: 0.1 * (index + 1) }}
     className={clsx(
-      'rounded-(--stat-card-outer-radius) border-4 border-(--border-color) p-(--stat-card-halo-gap)',
+      USE_HALO_STAT_CARD_DESIGN
+        ? 'rounded-(--stat-card-outer-radius) border-4 border-(--border-color) p-(--stat-card-halo-gap)'
+        : 'border border-(--border-color) p-6 text-center rounded-xl bg-(--main-color)',
     )}
     style={
-      {
-        '--stat-card-halo-gap': `${haloGap}px`,
-        '--stat-card-outer-radius':
-          'calc(var(--radius-xl) + var(--stat-card-halo-gap))',
-        '--stat-card-inner-radius':
-          'calc(var(--stat-card-outer-radius) - var(--stat-card-halo-gap))',
-      } as CSSProperties
+      USE_HALO_STAT_CARD_DESIGN
+        ? ({
+            '--stat-card-halo-gap': `${haloGap}px`,
+            '--stat-card-outer-radius':
+              'calc(var(--radius-xl) + var(--stat-card-halo-gap))',
+            '--stat-card-inner-radius':
+              'calc(var(--stat-card-outer-radius) - var(--stat-card-halo-gap))',
+          } as CSSProperties)
+        : undefined
     }
   >
-    <div
-      className={clsx(
-        'rounded-(--stat-card-inner-radius) bg-(--card-color) p-6 text-center',
-      )}
-    >
-      <div className='mb-1 text-3xl font-bold text-(--main-color)'>{value}</div>
-      <div className='text-sm text-(--secondary-color)'>{label}</div>
-    </div>
+    {USE_HALO_STAT_CARD_DESIGN ? (
+      <div
+        className={clsx(
+          'rounded-(--stat-card-inner-radius) bg-(--card-color) p-6 text-center',
+        )}
+      >
+        <div className='mb-1 text-3xl font-bold text-(--main-color)'>
+          {value}
+        </div>
+        <div className='text-sm text-(--secondary-color)'>{label}</div>
+      </div>
+    ) : (
+      <>
+        <div className='mb-1 text-3xl font-bold text-(--background-color)'>
+          {value}
+        </div>
+        <div className='text-sm text-(--card-color)'>{label}</div>
+      </>
+    )}
   </motion.div>
 );
 
